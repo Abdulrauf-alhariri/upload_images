@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload files</title>
+  </head>
+  <body>
+    <h1>Upload</h1>
+    <form
+      action="/upload"
+      method="post"
+      enctype="multipart/form-data"
+      class="form"
+    >
+      <input type="file" name="images" id="image-input" multiple />
+      <input type="submit" value="upload" />
+    </form>
+  </body>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    const form = document.querySelector(".form");
+    const imagefile = document.getElementById("image-input");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      console.log(imagefile.files);
+      var formData = new FormData();
+      formData.append("image", imagefile.files[0]);
+      formData.append("image", imagefile.files[1]);
+      formData.append("title", "hello");
+      const { data } = await axios.patch("/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log(data);
+    });
+  </script>
+</html>
