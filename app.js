@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-
+require("dotenv").config();
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -32,7 +32,9 @@ app.patch("/upload", upload.array("image"), (req, res) => {
 app.get("/get-data", (req, res) => {
   res.send("data");
 });
-app.listen(3000, (err) => {
+
+const port = process.env.PORT || 3000;
+app.listen(port, (err) => {
   if (err) {
     console.log(err);
   } else {
